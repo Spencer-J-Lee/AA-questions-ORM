@@ -70,6 +70,10 @@ class QuestionFollow
 		(most_followed.empty?) ? nil : most_followed.map { |datum| Question.new(datum) }
 	end
 
+	def self.most_followed(n)
+		QuestionFollow.most_followed_questions(n)[n-1]
+	end
+
 	attr_accessor :id, :follower_id, :question_id
 
 	def initialize(options)
