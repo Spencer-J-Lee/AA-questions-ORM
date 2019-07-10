@@ -44,6 +44,40 @@ class User
 		@lname = options['lname']
 	end
 
+	def save
+		if @id
+			self.update
+		else
+			self.create
+		end
+	end
+
+	def create
+		raise "#{self} already in database" if @id
+
+		QuestionsDBConnection.instance.execute(<<-SQL, @fname, @lname)
+			INSERT INTO
+				users (fname, lname)
+			VALUES
+				(?, ?)
+		SQL
+
+		@id = QuestionsDBConnection.instance.last_insert_row_id
+	end
+
+	def update
+		raise "#{self} already in database" unless @id
+
+		QuestionsDBConnection.instance.execute(<<-SQL, @fname, @lname, @id)
+			UPDATE
+				users
+			SET
+				fname = ?, lname = ?
+			WHERE
+				id = ?
+		SQL
+	end
+
 	def authored_questions
 		Question.find_by_author_id(@id)
 	end
