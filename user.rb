@@ -1,5 +1,6 @@
 require_relative 'questions_database'
 require_relative 'question_follow'
+require_relative 'question_like'
 require_relative 'question'
 require_relative 'reply'
 
@@ -42,7 +43,7 @@ class User
 		@fname = options['fname']
 		@lname = options['lname']
 	end
-	
+
 	def authored_questions
 		Question.find_by_author_id(@id)
 	end
@@ -53,5 +54,9 @@ class User
 
 	def followed_questions
 		QuestionFollow.followed_questions_for_user_id(@id)
+	end
+
+	def liked_questions
+		QuestionLike.liked_questions_for_user_id(@id)
 	end
 end
