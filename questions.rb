@@ -27,9 +27,7 @@ class User
 				id = ?
 		SQL
 
-		return nil if user.empty?
-
-		User.new(user.first)
+		(user.empty?) ? nil : User.new(user.first)
 	end
 
 	attr_accessor :id, :fname, :lname
@@ -57,9 +55,20 @@ class Question
 				id = ?
 		SQL
 
-		return nil if question.empty?
+		(question.empty?) ? nil : Question.new(question.first)
+	end
 
-		Question.new(question.first)
+	def self.find_by_author_id(author_id)
+		question = QuestionsDBConnection.instance.execute(<<-SQL, author_id)
+			SELECT
+				*
+			FROM
+				questions
+			WHERE
+				author_id = ?
+		SQL
+
+		(question.empty?) ? nil : Question.new(question.first)
 	end
 
 	attr_accessor :id, :title, :body, :author_id
@@ -88,9 +97,7 @@ class QuestionFollow
 				id = ?
 		SQL
 
-		return nil if question_follow.empty?
-
-		QuestionFollow.new(question_follow.first)
+		(question_follow.empty?) ? nil : QuestionFollow.new(question_follow.first)
 	end
 
 	attr_accessor :id, :follower_id, :question_id
@@ -118,9 +125,7 @@ class QuestionLike
 				id = ?
 		SQL
 
-		return nil if question_like.empty?
-
-		QuestionLike.new(question_like.first)
+		(question_like.empty?) ? nil : QuestionLike.new(question_like.first)
 	end
 
 	attr_accessor :id, :likes, :author_id, :question_id
@@ -149,9 +154,7 @@ class Reply
 				id = ?
 		SQL
 
-		return nil if reply.empty?
-
-		Reply.new(reply.first)
+		(reply.empty?) ? nil : Reply.new(reply.first)
 	end
 
 	attr_accessor :id, :user_id, :subject_question_id, :parent_reply_id, :body
