@@ -7,7 +7,7 @@ class QuestionFollow
 	end
 	
 	def self.find_by_id(id)
-		question_follow = QuestionsDBConnection.instance.execute(<<-SQL, id)
+		follow = QuestionsDBConnection.instance.execute(<<-SQL, id)
 			SELECT
 				*
 			FROM
@@ -16,7 +16,7 @@ class QuestionFollow
 				id = ?
 		SQL
 
-		(question_follow.empty?) ? nil : QuestionFollow.new(question_follow.first)
+		(follow.empty?) ? nil : QuestionFollow.new(follow.first)
 	end
 
 	attr_accessor :id, :follower_id, :question_id
