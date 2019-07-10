@@ -1,5 +1,6 @@
 require_relative 'questions_database'
 require_relative 'question'
+require_relative 'reply'
 
 class User
 	def self.all
@@ -35,6 +36,10 @@ class User
 
 	def self.authored_questions(id)
 		Question.find_by_author_id(id)
+	end
+
+	def self.authored_replies(id)
+		Reply.find_by_user_id(id)
 	end
 
 	attr_accessor :id, :fname, :lname
