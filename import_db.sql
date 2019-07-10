@@ -77,12 +77,12 @@ CREATE TABLE replies (
 INSERT INTO
 	replies (user_id, question_id, parent_reply_id, body)
 VALUES
-	(2, 1, NULL, "Reply by JOJO"),
-	(1, 1, 1, "Reply by DIO"),
-	(3, 1, 2, "Reply by KEKYOIN"),
-	(3, 1, 3, "Another reply by KEKYOIN"),
-	(1, 2, NULL, "Reply on second thread by DIO"),
-	(2, 2, 1, "Reply on second thread by JOJO");
+	(2, 1, NULL, "1st: reply by JOJO"),
+	(1, 1, 1, "2nd: reply by DIO"),
+	(3, 1, 2, "3rd: reply by KEKYOIN"),
+	(3, 1, 3, "4th: another reply by KEKYOIN"),
+	(1, 2, NULL, "1st: reply on second thread by DIO"),
+	(2, 2, 1, "2nd: reply on second thread by JOJO");
 
 -- QUESTION LIKES --
 
