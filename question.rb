@@ -1,5 +1,6 @@
 require_relative 'questions_database'
 require_relative 'user'
+require_relative 'reply'
 
 class Question
 	def self.all
@@ -44,5 +45,9 @@ class Question
 
 	def author
 		User.find_by_id(@author_id)
+	end
+
+	def replies
+		Reply.find_by_question_id(@id)
 	end
 end
