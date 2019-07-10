@@ -51,6 +51,25 @@ class QuestionFollow
 		(followed_questions.empty?) ? nil : followed_questions.map { |datum| Question.new(datum) }
 	end
 
+	def self.most_followed_questions(n)
+		most_followed = QuestionsDBConnection.instance.execute(<<-SQL, n)
+			SELECT
+				questions.*
+			FROM 
+				questions
+			LEFT OUTER JOIN
+				question_follows ON question_follows.question_id = questions.id
+			GROUP BY
+				questions.id
+			ORDER BY
+				COUNT(question_follows.follower_id) DESC
+			LIMIT
+				?
+		SQL
+
+		(most_followed.empty?) ? nil : most_followed.map { |datum| Question.new(datum) }
+	end
+
 	attr_accessor :id, :follower_id, :question_id
 
 	def initialize(options)
