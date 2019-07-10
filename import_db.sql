@@ -81,8 +81,8 @@ VALUES
 	(1, 1, 1, "Reply by DIO"),
 	(3, 1, 2, "Reply by KEKYOIN"),
 	(3, 1, 3, "Another reply by KEKYOIN"),
-	(1, 2, NULL, "Reply by DIO"),
-	(2, 2, 1, "Reply by JOJO");
+	(1, 2, NULL, "Reply on second thread by DIO"),
+	(2, 2, 1, "Reply on second thread by JOJO");
 
 -- QUESTION LIKES --
 
