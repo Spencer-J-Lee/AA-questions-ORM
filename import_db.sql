@@ -88,17 +88,18 @@ VALUES
 
 CREATE TABLE question_likes (
 	id INTEGER PRIMARY KEY,
-	likes INTEGER,
-	author_id INTEGER NOT NULL,
+	liker_id INTEGER NOT NULL,
 	question_id INTEGER NOT NULL,
 
-	FOREIGN KEY (author_id) REFERENCES users(id),
+	FOREIGN KEY (liker_id) REFERENCES users(id),
 	FOREIGN KEY (question_id) REFERENCES questions(id)
 );
 
 INSERT INTO
-	question_likes (author_id, question_id)
+	question_likes (liker_id, question_id)
 VALUES
 	(1, 1), 
-	(2, 2),
-	(3, 3);
+	(2, 1),
+	(3, 1),
+	(1, 2),
+	(2, 2);
