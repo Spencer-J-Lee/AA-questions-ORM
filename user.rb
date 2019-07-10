@@ -1,4 +1,5 @@
 require_relative 'questions_database'
+require_relative 'question'
 
 class User
 	def self.all
@@ -30,6 +31,10 @@ class User
 		SQL
 
 		(user.empty?) ? nil : User.new(user.first)
+	end
+
+	def self.authored_questions(id)
+		Question.find_by_author_id(id)
 	end
 
 	attr_accessor :id, :fname, :lname
