@@ -1,4 +1,5 @@
 require_relative 'questions_database'
+require_relative 'user'
 
 class Question
 	def self.all
@@ -39,5 +40,9 @@ class Question
 		@title = options['title']
 		@body = options['body']
 		@author_id = options['author_id']
+	end
+
+	def author
+		User.find_by_id(@author_id)
 	end
 end
