@@ -20,7 +20,7 @@ class Question
 	end
 
 	def self.find_by_author_id(author_id)
-		question = QuestionsDBConnection.instance.execute(<<-SQL, author_id)
+		questions = QuestionsDBConnection.instance.execute(<<-SQL, author_id)
 			SELECT
 				*
 			FROM
@@ -29,7 +29,7 @@ class Question
 				author_id = ?
 		SQL
 
-		(question.empty?) ? nil : Question.new(question.first)
+		(questions.empty?) ? nil : questions.map { |datum| Question.new(datum) }
 	end
 
 	attr_accessor :id, :title, :body, :author_id
