@@ -1,4 +1,5 @@
 require_relative 'questions_database'
+require_relative 'question'
 require_relative 'user'
 
 class QuestionLike
@@ -46,6 +47,23 @@ class QuestionLike
 		SQL
 
 		count.first['num_likes']
+	end
+
+	def self.liked_questions_for_user_id(user_id)
+		liked_questions = QuestionsDBConnection.instance.execute(<<-SQL, user_id)
+			SELECT
+				questions.*
+			FROM
+				questions
+			INNER JOIN
+				question_likes ON question_likes.question_id = questions.id
+			INNER JOIN
+				users ON users.id = question_likes.liker_id
+			WHERE
+				users.id = ?
+		SQL
+
+		(liked_questions.empty?) ? nil : liked_questions.map { |datum| Question.new(datum) }
 	end
 
 	attr_accessor :id, :liker_id, :question_id
