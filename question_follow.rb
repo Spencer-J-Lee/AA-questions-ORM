@@ -24,9 +24,7 @@ class QuestionFollow
 	def self.followers_for_question_id(question_id)
 		follows = QuestionsDBConnection.instance.execute(<<-SQL, question_id)
 			SELECT
-				users.id,
-				users.fname,
-				users.lname
+				users.*
 			FROM
 				users
 			INNER JOIN
