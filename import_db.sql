@@ -36,8 +36,8 @@ CREATE TABLE questions (
 INSERT INTO
 	questions (title, body, author_id)
 VALUES
-	('Question from JOJO?', 'FIRST BODY', (SELECT id FROM users WHERE fname = 'Dio' AND lname = 'Brando')),
-	('Question from DIO?', 'SECOND BODY', (SELECT id FROM users WHERE fname = 'Joseph' AND lname = 'Joestar')),
+	('Question from DIO?', 'FIRST BODY', (SELECT id FROM users WHERE fname = 'Dio' AND lname = 'Brando')),
+	('Question from JOJO?', 'SECOND BODY', (SELECT id FROM users WHERE fname = 'Joseph' AND lname = 'Joestar')),
 	('Question from KEKYOIN?', 'THIRD BODY', (SELECT id FROM users WHERE fname = 'Kekyoin' AND lname = 'Noriaki')),
 	('Another question from KEKYOIN?', 'FOURTH BODY', (SELECT id FROM users WHERE fname = 'Kekyoin' AND lname = 'Noriaki'));
 
