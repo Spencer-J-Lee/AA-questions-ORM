@@ -56,9 +56,9 @@ INSERT INTO
 	question_follows (follower_id, question_id)
 VALUES
 	(1, 2), -- Dio Brando following Joseph Joestar's question
-	(2, 3), -- Joseph Joestar following Kekyoin Noriaki's question
-	(3, 1); -- Kekyoin Noriaki following Dio Brando's question
-
+	(3, 1), -- Kekyoin Noriaki following Dio Brando's question
+	(2, 1), -- Joseph Joestar following Dio Brando's question
+	(1, 1); -- Dio Brando following Dio Brando's question
 
 -- REPLIES --
 
