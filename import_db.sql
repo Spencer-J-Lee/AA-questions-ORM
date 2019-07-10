@@ -19,7 +19,8 @@ INSERT INTO
 VALUES
 	('Dio', 'Brando'),
 	('Joseph', 'Joestar'),
-	('Kekyoin', 'Noriaki');
+	('Kekyoin', 'Noriaki'),
+	('Lurker','Larry');
 
 -- QUESTIONS --
 
