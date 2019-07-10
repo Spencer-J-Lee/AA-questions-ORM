@@ -47,6 +47,19 @@ class Reply
 		(replies.empty?) ? nil : replies.map { |datum| Reply.new(datum) }
 	end
 
+	def self.find_child_of_parent(parent_reply_id)
+		child = QuestionsDBConnection.instance.execute(<<-SQL, parent_reply_id)
+			SELECT
+				*
+			FROM
+				replies
+			WHERE
+				parent_reply_id = ?
+		SQL
+
+		(child.empty?) ? nil : Reply.new(child.first)
+	end
+
 	attr_accessor :id, :user_id, :question_id, :parent_reply_id, :body
 	
 	def initialize(options)
@@ -67,5 +80,9 @@ class Reply
 
 	def parent_reply
 		Reply.find_by_id(@parent_reply_id)
+	end
+
+	def child_reply
+		Reply.find_child_of_parent(id)
 	end
 end
