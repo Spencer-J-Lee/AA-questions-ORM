@@ -66,6 +66,26 @@ class QuestionLike
 		(liked_questions.empty?) ? nil : liked_questions.map { |datum| Question.new(datum) }
 	end
 
+	def self.most_liked_questions(n)
+		most_liked = QuestionsDBConnection.instance.execute(<<-SQL, n)
+			SELECT
+				questions.*,
+				COUNT(question_likes.liker_id)
+			FROM 
+				questions
+			LEFT OUTER JOIN
+				question_likes ON question_likes.question_id = questions.id
+			GROUP BY
+				questions.id
+			ORDER BY
+				COUNT(question_likes.liker_id) DESC, questions.id ASC
+			LIMIT
+				?
+		SQL
+
+		(most_liked.empty?) ? nil : most_liked.map { |datum| Question.new(datum) }
+	end
+
 	attr_accessor :id, :liker_id, :question_id
 
 	def initialize(options)
