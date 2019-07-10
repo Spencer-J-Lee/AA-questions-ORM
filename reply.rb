@@ -1,4 +1,6 @@
 require_relative 'questions_database'
+require_relative 'user'
+require_relative 'question'
 
 class Reply
 	def self.all
@@ -53,5 +55,17 @@ class Reply
 		@question_id = options['question_id']
 		@parent_reply_id = options['parent_reply_id']
 		@body = options['body']
+	end
+
+	def author
+		User.find_by_id(user_id)
+	end
+
+	def question
+		Question.find_by_id(@question_id)
+	end
+
+	def parent_reply
+		Reply.find_by_id(@parent_reply_id)
 	end
 end
