@@ -35,9 +35,10 @@ CREATE TABLE questions (
 INSERT INTO
 	questions (title, body, author_id)
 VALUES
-	('FIRST QUESTION', 'FIRST BODY', (SELECT id FROM users WHERE fname = 'Dio' AND lname = 'Brando')),
-	('SECOND QUESTION', 'SECOND BODY', (SELECT id FROM users WHERE fname = 'Joseph' AND lname = 'Joestar')),
-	('THIRD QUESTION', 'THIRD BODY', (SELECT id FROM users WHERE fname = 'Kekyoin' AND lname = 'Noriaki'));
+	('Question from JOJO?', 'FIRST BODY', (SELECT id FROM users WHERE fname = 'Dio' AND lname = 'Brando')),
+	('Question from DIO?', 'SECOND BODY', (SELECT id FROM users WHERE fname = 'Joseph' AND lname = 'Joestar')),
+	('Question from KEKYOIN?', 'THIRD BODY', (SELECT id FROM users WHERE fname = 'Kekyoin' AND lname = 'Noriaki')),
+	('Another question from KEKYOIN?', 'FOURTH BODY', (SELECT id FROM users WHERE fname = 'Kekyoin' AND lname = 'Noriaki'));
 
 -- QUESTION FOLLOWS --
 
@@ -75,9 +76,10 @@ CREATE TABLE replies (
 INSERT INTO
 	replies (user_id, subject_question_id, parent_reply_id, body)
 VALUES
-	(2, 1, NULL, "FIRST REPLY BY JOJO"),
-	(1, 1, 1, "SECOND REPLY BY DIO"),
-	(3, 1, 2, "THIRD REPLY BY KEKYOIN");
+	(2, 1, NULL, "Reply by JOJO"),
+	(1, 1, 1, "Reply by DIO"),
+	(3, 1, 2, "Reply by KEKYOIN"),
+	(3, 1, 3, "Another reply by KEKYOIN");
 
 -- QUESTION LIKES --
 
