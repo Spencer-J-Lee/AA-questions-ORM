@@ -19,6 +19,19 @@ class User
 		(user.empty?) ? nil : User.new(user.first)
 	end
 
+	def self.find_by_name(fname, lname)
+		user = QuestionsDBConnection.instance.execute(<<-SQL, fname, lname)
+			SELECT
+				*
+			FROM
+				users
+			WHERE
+				fname = ? AND lname = ?
+		SQL
+
+		(user.empty?) ? nil : User.new(user.first)
+	end
+
 	attr_accessor :id, :fname, :lname
 
 	def initialize(options)
