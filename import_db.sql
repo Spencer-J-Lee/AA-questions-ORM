@@ -39,7 +39,9 @@ VALUES
 	('Question from DIO?', 'FIRST BODY', (SELECT id FROM users WHERE fname = 'Dio' AND lname = 'Brando')),
 	('Question from JOJO?', 'SECOND BODY', (SELECT id FROM users WHERE fname = 'Joseph' AND lname = 'Joestar')),
 	('Question from KEKYOIN?', 'THIRD BODY', (SELECT id FROM users WHERE fname = 'Kekyoin' AND lname = 'Noriaki')),
-	('Another question from KEKYOIN?', 'FOURTH BODY', (SELECT id FROM users WHERE fname = 'Kekyoin' AND lname = 'Noriaki'));
+	('Another question from KEKYOIN?', 'FOURTH BODY', 3),
+	('2nd question from DIO?', 'FIFTH BODY', 1),
+	('3rd question from DIO?', 'SIXTH BODY', 1);
 
 -- QUESTION FOLLOWS --
 
@@ -102,4 +104,5 @@ VALUES
 	(2, 1),
 	(3, 1),
 	(1, 2),
-	(2, 2);
+	(2, 2),
+	(1, 5);
