@@ -64,22 +64,24 @@ VALUES
 CREATE TABLE replies (
 	id INTEGER PRIMARY KEY,
 	user_id INTEGER NOT NULL,
-	subject_question_id INTEGER NOT NULL,
+	question_id INTEGER NOT NULL,
 	parent_reply_id INTEGER,
 	body TEXT NOT NULL,
 
-	FOREIGN KEY (subject_question_id) REFERENCES questions(id),
+	FOREIGN KEY (question_id) REFERENCES questions(id),
 	FOREIGN KEY (user_id) REFERENCES users(id),
 	FOREIGN KEY (parent_reply_id) REFERENCES replies(id)
 );
 
 INSERT INTO
-	replies (user_id, subject_question_id, parent_reply_id, body)
+	replies (user_id, question_id, parent_reply_id, body)
 VALUES
 	(2, 1, NULL, "Reply by JOJO"),
 	(1, 1, 1, "Reply by DIO"),
 	(3, 1, 2, "Reply by KEKYOIN"),
-	(3, 1, 3, "Another reply by KEKYOIN");
+	(3, 1, 3, "Another reply by KEKYOIN"),
+	(1, 2, NULL, "Reply by DIO"),
+	(2, 2, 1, "Reply by JOJO");
 
 -- QUESTION LIKES --
 
