@@ -35,6 +35,19 @@ class QuestionLike
 		(likers.empty?) ? nil : likers.map { |datum| User.new(datum) }
 	end
 
+	def self.num_likes_for_question_id(question_id)
+		count = QuestionsDBConnection.instance.execute(<<-SQL, question_id)
+			SELECT
+				COUNT(question_likes.liker_id) AS num_likes
+			FROM
+				question_likes
+			WHERE
+				question_likes.question_id = ?
+		SQL
+
+		count.first['num_likes']
+	end
+
 	attr_accessor :id, :liker_id, :question_id
 
 	def initialize(options)
