@@ -3,7 +3,7 @@ require 'singleton'
 
 class QuestionsDBConnection < SQLite3::Database
 	include Singleton
-
+	
 	def initialize
 		super ('questions.db')
 		self.type_translation = true
@@ -32,6 +32,8 @@ class User
 		User.new(user.first)
 	end
 
+	attr_accessor :id, :fname, :lname
+
 	def initialize(options)
 		@id = options['id']
 		@fname = options['fname']
@@ -59,6 +61,8 @@ class Question
 
 		Question.new(question.first)
 	end
+
+	attr_accessor :id, :title, :body, :author_id
 
 	def initialize(options)
 		@id = options['id']
@@ -89,6 +93,8 @@ class QuestionFollow
 		QuestionFollow.new(question_follow.first)
 	end
 
+	attr_accessor :id, :follower_id, :question_id
+
 	def initialize(options)
 		@id = options['id']
 		@follower_id = options['follower_id']
@@ -116,6 +122,8 @@ class QuestionLike
 
 		QuestionLike.new(question_like.first)
 	end
+
+	attr_accessor :id, :likes, :author_id, :question_id
 
 	def initialize(options)
 		@id = options['id']
@@ -146,6 +154,8 @@ class Reply
 		Reply.new(reply.first)
 	end
 
+	attr_accessor :id, :user_id, :subject_question_id, :parent_reply_id, :body
+	
 	def initialize(options)
 		@id = options['id']
 		@user_id = options['user_id']
