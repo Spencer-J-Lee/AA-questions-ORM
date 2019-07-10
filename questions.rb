@@ -17,6 +17,21 @@ class User
 		users.map { |datum| User.new(datum) }
 	end
 
+	def self.find_by_id(id)
+		user = QuestionsDBConnection.instance.execute(<<-SQL, id)
+			SELECT
+				*
+			FROM
+				users
+			WHERE
+				id = ?
+		SQL
+
+		return nil if user.empty?
+
+		User.new(user.first)
+	end
+
 	def initialize(options)
 		@id = options['id']
 		@fname = options['fname']
@@ -30,6 +45,21 @@ class Question
 		questions.map { |datum| Question.new(datum) }
 	end
 	
+	def self.find_by_id(id)
+		question = QuestionsDBConnection.instance.execute(<<-SQL, id)
+			SELECT
+				*
+			FROM
+				questions
+			WHERE
+				id = ?
+		SQL
+
+		return nil if question.empty?
+
+		Question.new(question.first)
+	end
+
 	def initialize(options)
 		@id = options['id']
 		@title = options['title']
@@ -44,6 +74,21 @@ class QuestionFollow
 		question_follows.map { |datum| QuestionFollow.new(datum) }
 	end
 	
+	def self.find_by_id(id)
+		question_follow = QuestionsDBConnection.instance.execute(<<-SQL, id)
+			SELECT
+				*
+			FROM
+				question_follows
+			WHERE
+				id = ?
+		SQL
+
+		return nil if question_follow.empty?
+
+		QuestionFollow.new(question_follow.first)
+	end
+
 	def initialize(options)
 		@id = options['id']
 		@follower_id = options['follower_id']
@@ -57,6 +102,21 @@ class QuestionLike
 		question_likes.map { |datum| QuestionLike.new(datum) }
 	end
 	
+	def self.find_by_id(id)
+		question_like = QuestionsDBConnection.instance.execute(<<-SQL, id)
+			SELECT
+				*
+			FROM
+				question_likes
+			WHERE
+				id = ?
+		SQL
+
+		return nil if question_like.empty?
+
+		QuestionLike.new(question_like.first)
+	end
+
 	def initialize(options)
 		@id = options['id']
 		@likes = 0
@@ -71,6 +131,21 @@ class Reply
 		replies.map { |datum| Reply.new(datum) }
 	end
 	
+	def self.find_by_id(id)
+		reply = QuestionsDBConnection.instance.execute(<<-SQL, id)
+			SELECT
+				*
+			FROM
+				replies
+			WHERE
+				id = ?
+		SQL
+
+		return nil if reply.empty?
+
+		Reply.new(reply.first)
+	end
+
 	def initialize(options)
 		@id = options['id']
 		@user_id = options['user_id']
@@ -79,3 +154,7 @@ class Reply
 		@body = options['body']
 	end
 end
+
+# For Testing
+require 'pry'
+binding.pry
