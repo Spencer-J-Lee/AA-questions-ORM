@@ -1,5 +1,6 @@
 require_relative 'questions_database'
 require_relative 'question'
+require_relative 'user'
 
 class QuestionFollow
 	def self.all
@@ -35,6 +36,21 @@ class QuestionFollow
 		SQL
 
 		(follows.empty?) ? nil : follows.map { |datum| User.new(datum) }
+	end
+
+	def self.followed_questions_for_user_id(user_id)
+		followed_questions = QuestionsDBConnection.instance.execute(<<-SQL, user_id)
+			SELECT
+				questions.*
+			FROM
+				question_follows
+			INNER JOIN
+				questions ON questions.id = question_follows.question_id
+			WHERE
+				question_follows.follower_id = ?
+		SQL
+
+		(followed_questions.empty?) ? nil : followed_questions.map { |datum| Question.new(datum) }
 	end
 
 	attr_accessor :id, :follower_id, :question_id
