@@ -61,40 +61,6 @@ class Reply < ModelBase
 		@body = options['body']
 	end
 
-	def save
-		if @id
-			self.update
-		else
-			self.create
-		end
-	end
-
-	def create
-		raise "#{self} already in database" if @id
-
-		QuestionsDBConnection.instance.execute(<<-SQL, @user_id, @question_id, @parent_reply_id, @body)
-			INSERT INTO
-				replies (user_id, question_id, parent_reply_id, body)
-			VALUES
-				(?, ?, ?, ?)
-		SQL
-
-		@id = QuestionsDBConnection.instance.last_insert_row_id
-	end
-
-	def update
-		raise "#{self} already in database" unless @id
-
-		QuestionsDBConnection.instance.execute(<<-SQL, @user_id, @question_id, @parent_reply_id, @body, @id)
-			UPDATE
-				replies
-			SET
-				user_id = ?, question_id = ?, parent_reply_id = ?, body = ?
-			WHERE
-				id = ?
-		SQL
-	end
-
 	def author
 		User.find_by_id(user_id)
 	end

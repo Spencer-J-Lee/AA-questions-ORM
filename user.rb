@@ -9,10 +9,6 @@ class User < ModelBase
 	def self.all
 		super
 	end
-
-	def self.find_by_id(id)
-		super(id)
-	end
 	
 	def self.find_by_name(fname, lname)
 		user = QuestionsDBConnection.instance.execute(<<-SQL, fname, lname)
@@ -33,40 +29,6 @@ class User < ModelBase
 		@id = options['id']
 		@fname = options['fname']
 		@lname = options['lname']
-	end
-
-	def save
-		if @id
-			self.update
-		else	
-			self.create
-		end
-	end
-
-	def create
-		raise "#{self} already in database" if @id
-
-		QuestionsDBConnection.instance.execute(<<-SQL, @fname, @lname)
-			INSERT INTO
-				users (fname, lname)
-			VALUES
-				(?, ?)
-		SQL
-
-		@id = QuestionsDBConnection.instance.last_insert_row_id
-	end
-
-	def update
-		raise "#{self} already in database" unless @id
-
-		QuestionsDBConnection.instance.execute(<<-SQL, @fname, @lname, @id)
-			UPDATE
-				users
-			SET
-				fname = ?, lname = ?
-			WHERE
-				id = ?
-		SQL
 	end
 
 	def authored_questions
