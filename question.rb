@@ -7,8 +7,7 @@ require_relative 'user'
 
 class Question < ModelBase
 	def self.all
-		questions = QuestionsDBConnection.instance.execute("SELECT * FROM questions")
-		questions.map { |datum| Question.new(datum) }
+		super('questions', Question)
 	end
 	
 	def self.find_by_id(id)

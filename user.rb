@@ -7,8 +7,7 @@ require_relative 'reply'
 
 class User < ModelBase
 	def self.all
-		users = QuestionsDBConnection.instance.execute("SELECT * FROM users")
-		users.map { |datum| User.new(datum) }
+		super('users', User)
 	end
 
 	def self.find_by_id(id)
