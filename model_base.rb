@@ -63,4 +63,23 @@ class ModelBase
 				id = ?
 		SQL
 	end
+
+	def self.where(options)
+		booleans = options.map do |col, value|
+			value = "'#{value}'" if value.is_a?(String)
+
+			"#{col.to_s} = #{value}"
+		end.join(' AND ')
+
+		results = QuestionsDBConnection.instance.execute(<<-SQL, )
+			SELECT
+				*
+			FROM
+				#{self.table}
+			WHERE
+				#{booleans}
+		SQL
+
+		results.empty? ? nil : results.map { |datum| self.new(datum) }
+	end
 end
