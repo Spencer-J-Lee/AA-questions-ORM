@@ -5,11 +5,11 @@ require_relative 'user'
 
 class QuestionLike < ModelBase
 	def self.all
-		super('question_likes', QuestionLike)
+		super
 	end
-	
+
 	def self.find_by_id(id)
-		super(id, 'question_likes', QuestionLike)
+		super(id)
 	end
 
 	def self.likers_for_question_id(question_id)

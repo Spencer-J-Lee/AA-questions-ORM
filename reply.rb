@@ -5,11 +5,11 @@ require_relative 'user'
 
 class Reply < ModelBase
 	def self.all
-		super('replies', Reply)
+		super
 	end
-	
+
 	def self.find_by_id(id)
-		super(id, 'replies', Reply)
+		super(id)
 	end
 
 	def self.find_by_user_id(user_id)

@@ -1,19 +1,25 @@
+require 'active_support/inflector'
+
 class ModelBase
-	def self.find_by_id(id, table, class_type)
+	def self.table
+		self.to_s.tableize
+	end
+
+	def self.find_by_id(id)
 		result = QuestionsDBConnection.instance.execute(<<-SQL, id)
 			SELECT
 				*
 			FROM
-				#{table}
+				#{self.table}
 			WHERE
 				id = ?
 		SQL
 
-		(result.empty?) ? nil : class_type.new(result.first)
+		(result.empty?) ? nil : self.new(result.first)
 	end
 
-	def self.all(table, class_type)
-		results = QuestionsDBConnection.instance.execute("SELECT * FROM #{table}")
-		results.map { |datum| class_type.new(datum) }
+	def self.all
+		results = QuestionsDBConnection.instance.execute("SELECT * FROM #{self.table}")
+		results.map { |datum| self.new(datum) }
 	end
 end

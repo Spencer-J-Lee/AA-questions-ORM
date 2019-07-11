@@ -5,11 +5,11 @@ require_relative 'user'
 
 class QuestionFollow < ModelBase
 	def self.all
-		super('question_follows', QuestionFollow)
+		super
 	end
-	
+
 	def self.find_by_id(id)
-		super(id, 'question_follows', QuestionFollow)
+		super(id)
 	end
 
 	def self.followers_for_question_id(question_id)

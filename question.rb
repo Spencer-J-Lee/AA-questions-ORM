@@ -7,11 +7,11 @@ require_relative 'user'
 
 class Question < ModelBase
 	def self.all
-		super('questions', Question)
+		super
 	end
-	
+
 	def self.find_by_id(id)
-		super(id, 'questions', Question)
+		super(id)
 	end
 
 	def self.find_by_author_id(author_id)

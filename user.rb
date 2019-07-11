@@ -7,11 +7,11 @@ require_relative 'reply'
 
 class User < ModelBase
 	def self.all
-		super('users', User)
+		super
 	end
 
 	def self.find_by_id(id)
-		super(id, 'users', User)
+		super(id)
 	end
 	
 	def self.find_by_name(fname, lname)
@@ -38,7 +38,7 @@ class User < ModelBase
 	def save
 		if @id
 			self.update
-		else
+		else	
 			self.create
 		end
 	end
