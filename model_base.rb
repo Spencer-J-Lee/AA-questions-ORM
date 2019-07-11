@@ -11,4 +11,9 @@ class ModelBase
 
 		(result.empty?) ? nil : class_type.new(result.first)
 	end
+
+	def self.all(table, class_type)
+		results = QuestionsDBConnection.instance.execute("SELECT * FROM #{table}")
+		results.map { |datum| class_type.new(datum) }
+	end
 end
