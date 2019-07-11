@@ -22,4 +22,45 @@ class ModelBase
 		results = QuestionsDBConnection.instance.execute("SELECT * FROM #{self.table}")
 		results.map { |datum| self.new(datum) }
 	end
+
+	def save
+		@id ? update : create
+	end
+
+	def create
+		raise "#{self} already in database" if @id
+
+		vars  				 = self.instance_variables.drop(1)
+
+		values 				 = vars.map { |var| self.instance_variable_get(var) }
+		col_names      = vars.map { |var| var[1..-1] }.join(', ')
+		question_marks = (['?'] * vars.count).join(', ')
+
+		QuestionsDBConnection.instance.execute(<<-SQL, *values)
+			INSERT INTO
+				#{self.class.table} (#{col_names})
+			VALUES
+				(#{question_marks})
+		SQL
+
+		@id = QuestionsDBConnection.instance.last_insert_row_id
+	end
+
+	def update
+		raise "#{self} already in database" unless @id
+
+		vars  	= self.instance_variables.drop(1)
+
+		values 	= vars.map { |var| self.instance_variable_get(var) }
+		setters = vars.map { |var| var[1..-1] + " = ?"}.join(', ')
+
+		QuestionsDBConnection.instance.execute(<<-SQL, *values, @id)
+			UPDATE
+				#{self.class.table}
+			SET
+				#{setters}
+			WHERE
+				id = ?
+		SQL
+	end
 end
