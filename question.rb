@@ -1,26 +1,18 @@
+require File.expand_path('../model_base.rb', __FILE__)
 require_relative 'questions_database'
 require_relative 'question_follow'
 require_relative 'question_like'
 require_relative 'reply'
 require_relative 'user'
 
-class Question
+class Question < ModelBase
 	def self.all
 		questions = QuestionsDBConnection.instance.execute("SELECT * FROM questions")
 		questions.map { |datum| Question.new(datum) }
 	end
 	
 	def self.find_by_id(id)
-		question = QuestionsDBConnection.instance.execute(<<-SQL, id)
-			SELECT
-				*
-			FROM
-				questions
-			WHERE
-				id = ?
-		SQL
-
-		(question.empty?) ? nil : Question.new(question.first)
+		super(id, 'questions', Question)
 	end
 
 	def self.find_by_author_id(author_id)
