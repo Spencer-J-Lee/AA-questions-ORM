@@ -24,7 +24,7 @@ class QuestionLike < ModelBase
 				question_id = ?
 		SQL
 
-		(likers.empty?) ? nil : likers.map { |datum| User.new(datum) }
+		likers.empty? ? nil : likers.map { |datum| User.new(datum) }
 	end
 
 	def self.num_likes_for_question_id(question_id)
@@ -54,7 +54,7 @@ class QuestionLike < ModelBase
 				users.id = ?
 		SQL
 
-		(liked_questions.empty?) ? nil : liked_questions.map { |datum| Question.new(datum) }
+		liked_questions.empty? ? nil : liked_questions.map { |datum| Question.new(datum) }
 	end
 
 	def self.most_liked_questions(n)
@@ -74,7 +74,7 @@ class QuestionLike < ModelBase
 				?
 		SQL
 
-		(most_liked.empty?) ? nil : most_liked.map { |datum| Question.new(datum) }
+		most_liked.empty? ? nil : most_liked.map { |datum| Question.new(datum) }
 	end
 
 	def self.most_liked(n)

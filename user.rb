@@ -20,7 +20,7 @@ class User < ModelBase
 				fname = ? AND lname = ?
 		SQL
 
-		(user.empty?) ? nil : User.new(user.first)
+		user.empty? ? nil : User.new(user.first)
 	end
 
 	attr_accessor :id, :fname, :lname

@@ -24,7 +24,7 @@ class Question < ModelBase
 				author_id = ?
 		SQL
 
-		(questions.empty?) ? nil : questions.map { |datum| Question.new(datum) }
+		questions.empty? ? nil : questions.map { |datum| Question.new(datum) }
 	end
 
 	attr_accessor :id, :title, :body, :author_id

@@ -22,7 +22,7 @@ class Reply < ModelBase
 				user_id = ?
 		SQL
 
-		(replies.empty?) ? nil : replies.map { |datum| Reply.new(datum) }
+		replies.empty? ? nil : replies.map { |datum| Reply.new(datum) }
 	end
 
 	def self.find_by_question_id(question_id)
@@ -35,7 +35,7 @@ class Reply < ModelBase
 				question_id = ?
 		SQL
 
-		(replies.empty?) ? nil : replies.map { |datum| Reply.new(datum) }
+		replies.empty? ? nil : replies.map { |datum| Reply.new(datum) }
 	end
 
 	def self.find_child_of_parent(parent_reply_id)
@@ -48,7 +48,7 @@ class Reply < ModelBase
 				parent_reply_id = ?
 		SQL
 
-		(child.empty?) ? nil : Reply.new(child.first)
+		child.empty? ? nil : Reply.new(child.first)
 	end
 
 	attr_accessor :id, :user_id, :question_id, :parent_reply_id, :body

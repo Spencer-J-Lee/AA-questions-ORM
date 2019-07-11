@@ -15,7 +15,7 @@ class ModelBase
 				id = ?
 		SQL
 
-		(result.empty?) ? nil : self.new(result.first)
+		result.empty? ? nil : self.new(result.first)
 	end
 
 	def self.all

@@ -24,7 +24,7 @@ class QuestionFollow < ModelBase
 				question_follows.question_id = ?
 		SQL
 
-		(follows.empty?) ? nil : follows.map { |datum| User.new(datum) }
+		follows.empty? ? nil : follows.map { |datum| User.new(datum) }
 	end
 
 	def self.followed_questions_for_user_id(user_id)
@@ -39,7 +39,7 @@ class QuestionFollow < ModelBase
 				question_follows.follower_id = ?
 		SQL
 
-		(followed_questions.empty?) ? nil : followed_questions.map { |datum| Question.new(datum) }
+		followed_questions.empty? ? nil : followed_questions.map { |datum| Question.new(datum) }
 	end
 
 	def self.most_followed_questions(n)
@@ -58,7 +58,7 @@ class QuestionFollow < ModelBase
 				?
 		SQL
 
-		(most_followed.empty?) ? nil : most_followed.map { |datum| Question.new(datum) }
+		most_followed.empty? ? nil : most_followed.map { |datum| Question.new(datum) }
 	end
 
 	def self.most_followed(n)
