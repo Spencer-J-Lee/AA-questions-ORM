@@ -65,11 +65,11 @@ class ModelBase
 	end
 
 	def self.where(options)
-		booleans = options.map do |col, value|
-			value = "'#{value}'" if value.is_a?(String)
-
-			"#{col.to_s} = #{value}"
-		end.join(' AND ')
+		if options.is_a?(String)
+			booleans = options
+		else
+			booleans = self.convert_hash_into_booleans(options)
+		end
 
 		results = QuestionsDBConnection.instance.execute(<<-SQL, )
 			SELECT
@@ -81,5 +81,14 @@ class ModelBase
 		SQL
 
 		results.empty? ? nil : results.map { |datum| self.new(datum) }
+	end
+
+	private 
+	
+	def self.convert_hash_into_booleans(hash)
+		keys = hash.keys.map(&:to_s)
+		vals = hash.values.map { |val| val.is_a?(String) ? "'#{val}'" : val }
+		
+		(0...hash.count).map { |i| "#{keys[i]} = #{vals[i]}" }.join(' AND ')
 	end
 end
