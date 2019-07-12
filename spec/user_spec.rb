@@ -78,4 +78,13 @@ describe User do
 			user.liked_questions
 		end
 	end
+
+	describe "#average_karma" do
+		let(:user2) { User.find_by_id(2) }
+		
+		it "returns the average likes of a user's questions" do
+			expect(user.average_karma).to eq(1)
+			expect(user2.average_karma).to eq(2.5)
+		end
+	end
 end
