@@ -64,7 +64,7 @@ class QuestionFollow < ModelBase
 	attr_accessor :id, :follower_id, :question_id
 
 	def initialize(options)
-		@id = options['id']
+		@id 				 = options['id']
 		@follower_id = options['follower_id']
 		@question_id = options['question_id']
 	end

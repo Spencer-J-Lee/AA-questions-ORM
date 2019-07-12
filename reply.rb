@@ -50,11 +50,11 @@ class Reply < ModelBase
 	attr_accessor :id, :user_id, :question_id, :parent_reply_id, :body
 	
 	def initialize(options)
-		@id = options['id']
-		@user_id = options['user_id']
-		@question_id = options['question_id']
+		@id							 = options['id']
+		@user_id 	    	 = options['user_id']
+		@question_id 	   = options['question_id']
 		@parent_reply_id = options['parent_reply_id']
-		@body = options['body']
+		@body 		       = options['body']
 	end
 
 	def author

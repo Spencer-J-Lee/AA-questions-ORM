@@ -22,7 +22,7 @@ class User < ModelBase
 	attr_accessor :id, :fname, :lname
 	
 	def initialize(options)
-		@id = options['id']
+		@id    = options['id']
 		@fname = options['fname']
 		@lname = options['lname']
 	end
