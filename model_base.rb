@@ -6,7 +6,7 @@ class ModelBase
 	end
 
 	def self.find_by_id(id)
-		result = QuestionsDBConnection.instance.execute(<<-SQL, id)
+		result = QuestionsDBConnection.execute(<<-SQL, id)
 			SELECT
 				*
 			FROM
@@ -19,7 +19,7 @@ class ModelBase
 	end
 
 	def self.all
-		results = QuestionsDBConnection.instance.execute("SELECT * FROM #{self.table}")
+		results = QuestionsDBConnection.execute("SELECT * FROM #{self.table}")
 		results.map { |datum| self.new(datum) }
 	end
 
@@ -36,14 +36,14 @@ class ModelBase
 		col_names      = vars.map { |var| var[1..-1] }.join(', ')
 		question_marks = (['?'] * vars.count).join(', ')
 
-		QuestionsDBConnection.instance.execute(<<-SQL, *values)
+		QuestionsDBConnection.execute(<<-SQL, *values)
 			INSERT INTO
 				#{self.class.table} (#{col_names})
 			VALUES
 				(#{question_marks})
 		SQL
 
-		@id = QuestionsDBConnection.instance.last_insert_row_id
+		@id = QuestionsDBConnection.last_insert_row_id
 	end
 
 	def update
@@ -54,7 +54,7 @@ class ModelBase
 		values 	= vars.map { |var| self.instance_variable_get(var) }
 		setters = vars.map { |var| var[1..-1] + " = ?"}.join(', ')
 
-		QuestionsDBConnection.instance.execute(<<-SQL, *values, @id)
+		QuestionsDBConnection.execute(<<-SQL, *values, @id)
 			UPDATE
 				#{self.class.table}
 			SET
@@ -71,7 +71,7 @@ class ModelBase
 			booleans = self.convert_hash_into_booleans(options)
 		end
 
-		results = QuestionsDBConnection.instance.execute(<<-SQL, )
+		results = QuestionsDBConnection.execute(<<-SQL, )
 			SELECT
 				*
 			FROM

@@ -15,7 +15,7 @@ class Question < ModelBase
 	end
 
 	def self.find_by_author_id(author_id)
-		questions = QuestionsDBConnection.instance.execute(<<-SQL, author_id)
+		questions = QuestionsDBConnection.execute(<<-SQL, author_id)
 			SELECT
 				*
 			FROM

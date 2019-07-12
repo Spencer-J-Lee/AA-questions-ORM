@@ -13,7 +13,7 @@ class QuestionFollow < ModelBase
 	end
 
 	def self.followers_for_question_id(question_id)
-		follows = QuestionsDBConnection.instance.execute(<<-SQL, question_id)
+		follows = QuestionsDBConnection.execute(<<-SQL, question_id)
 			SELECT
 				users.*
 			FROM
@@ -28,7 +28,7 @@ class QuestionFollow < ModelBase
 	end
 
 	def self.followed_questions_for_user_id(user_id)
-		followed_questions = QuestionsDBConnection.instance.execute(<<-SQL, user_id)
+		followed_questions = QuestionsDBConnection.execute(<<-SQL, user_id)
 			SELECT
 				questions.*
 			FROM
@@ -43,7 +43,7 @@ class QuestionFollow < ModelBase
 	end
 
 	def self.most_followed_questions(n)
-		most_followed = QuestionsDBConnection.instance.execute(<<-SQL, n)
+		most_followed = QuestionsDBConnection.execute(<<-SQL, n)
 			SELECT
 				questions.*
 			FROM 

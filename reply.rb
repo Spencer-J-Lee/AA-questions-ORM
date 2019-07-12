@@ -13,7 +13,7 @@ class Reply < ModelBase
 	end
 
 	def self.find_by_user_id(user_id)
-		replies = QuestionsDBConnection.instance.execute(<<-SQL, user_id)
+		replies = QuestionsDBConnection.execute(<<-SQL, user_id)
 			SELECT
 				*
 			FROM
@@ -26,7 +26,7 @@ class Reply < ModelBase
 	end
 
 	def self.find_by_question_id(question_id)
-		replies = QuestionsDBConnection.instance.execute(<<-SQL, question_id)
+		replies = QuestionsDBConnection.execute(<<-SQL, question_id)
 			SELECT
 				*
 			FROM
@@ -39,7 +39,7 @@ class Reply < ModelBase
 	end
 
 	def self.find_child_of_parent(parent_reply_id)
-		child = QuestionsDBConnection.instance.execute(<<-SQL, parent_reply_id)
+		child = QuestionsDBConnection.execute(<<-SQL, parent_reply_id)
 			SELECT
 				*
 			FROM
