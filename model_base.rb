@@ -47,7 +47,7 @@ class ModelBase
 	end
 
 	def update
-		raise "#{self} already in database" unless @id
+		raise "#{self} not in database" unless @id
 
 		vars  	= self.instance_variables.drop(1)
 
