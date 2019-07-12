@@ -18,6 +18,19 @@ describe User do
 			expect(user.id).to be_nil
 		end
 	end
+
+	describe "::all" do
+		let(:results) { User.all }
+
+		it "returns all users" do
+			expect(results).to all(be_an(User))
+			expect(results.map(&:lname).uniq).to eq(['User'])
+			expect(results[0].fname).to eq('First')
+			expect(results[1].fname).to eq('Second')
+			expect(results[2].fname).to eq('Third')
+			expect(results[3].fname).to eq('Lurker')
+		end
+	end
 	
 	describe "::find_by_id" do
 		let(:result) { User.find_by_id(1) }
