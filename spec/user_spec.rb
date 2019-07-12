@@ -19,6 +19,15 @@ describe User do
 		end
 	end
 	
+	describe "::find_by_id" do
+		let(:result) { User.find_by_id(1) }
+
+		it "returns an instance of user with the specified id" do
+			expect(result.class).to be(User)
+			expect(result.id).to be(1)
+		end
+	end
+
 	describe "::find_by_name" do
 		let(:result) { User.find_by_name('First', 'User') }
 
