@@ -19,4 +19,14 @@ describe Question do
 			expect(question.id).to be_nil
 		end
 	end
+
+	describe "::all" do
+		let(:results) { Question.all }
+
+		it "returns all questions" do
+			expect(results).to all(be_an(Question))
+			expect(results.count).to be(6)
+			expect(results.map(&:title).uniq.count).to be(6)
+		end
+	end
 end
