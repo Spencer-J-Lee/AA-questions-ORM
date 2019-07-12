@@ -1,7 +1,7 @@
 require 'sqlite3'
 require 'singleton'
 
-class QuestionsDBConnection < SQLite3::Database
+class QuestionsDB < SQLite3::Database
 	include Singleton
 
 	def initialize
@@ -9,7 +9,7 @@ class QuestionsDBConnection < SQLite3::Database
 		self.type_translation = true
 		self.results_as_hash = true
 	end
-
+	
 	def self.execute(*args)
 		instance.execute(*args)
 	end

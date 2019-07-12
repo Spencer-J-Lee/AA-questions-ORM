@@ -11,7 +11,7 @@ class User < ModelBase
 	end
 	
 	def self.find_by_name(fname, lname)
-		user = QuestionsDBConnection.execute(<<-SQL, fname, lname)
+		user = QuestionsDB.execute(<<-SQL, fname, lname)
 			SELECT
 				*
 			FROM
@@ -48,7 +48,7 @@ class User < ModelBase
 	end
 	
 	def average_karma # Avg number of likes for a User's questions.
-		karma = QuestionsDBConnection.execute(<<-SQL, @id)
+		karma = QuestionsDB.execute(<<-SQL, @id)
 			SELECT 
 				AVG(num_likes) AS average_karma
 			FROM (

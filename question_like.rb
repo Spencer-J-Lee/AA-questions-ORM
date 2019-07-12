@@ -13,7 +13,7 @@ class QuestionLike < ModelBase
 	end
 
 	def self.likers_for_question_id(question_id)
-		likers = QuestionsDBConnection.execute(<<-SQL, question_id)
+		likers = QuestionsDB.execute(<<-SQL, question_id)
 			SELECT
 				users.*
 			FROM
@@ -28,7 +28,7 @@ class QuestionLike < ModelBase
 	end
 
 	def self.num_likes_for_question_id(question_id)
-		count = QuestionsDBConnection.execute(<<-SQL, question_id)
+		count = QuestionsDB.execute(<<-SQL, question_id)
 			SELECT
 				COUNT(question_likes.liker_id) AS num_likes
 			FROM
@@ -41,7 +41,7 @@ class QuestionLike < ModelBase
 	end
 
 	def self.liked_questions_for_user_id(user_id)
-		liked_questions = QuestionsDBConnection.execute(<<-SQL, user_id)
+		liked_questions = QuestionsDB.execute(<<-SQL, user_id)
 			SELECT
 				questions.*
 			FROM
@@ -58,7 +58,7 @@ class QuestionLike < ModelBase
 	end
 
 	def self.most_liked_questions(n)
-		most_liked = QuestionsDBConnection.execute(<<-SQL, n)
+		most_liked = QuestionsDB.execute(<<-SQL, n)
 			SELECT
 				questions.*,
 				COUNT(question_likes.liker_id)
