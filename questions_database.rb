@@ -10,6 +10,10 @@ class QuestionsDB < SQLite3::Database
 		self.results_as_hash = true
 	end
 	
+	def self.reset!
+		`cat import_db.sql | sqlite3 questions.db`
+	end
+
 	def self.execute(*args)
 		instance.execute(*args)
 	end
