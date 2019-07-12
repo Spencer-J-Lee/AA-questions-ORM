@@ -69,4 +69,13 @@ describe User do
 			user.followed_questions
 		end
 	end
+
+	describe "#liked_questions" do
+		let(:question_like) { class_double("QuestionLike").as_stubbed_const }
+
+		it "calls QuestionLike::liked_questions_for_user_id" do
+			expect(question_like).to receive(:liked_questions_for_user_id).with(user.id)
+			user.liked_questions
+		end
+	end
 end
