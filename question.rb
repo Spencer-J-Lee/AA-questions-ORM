@@ -23,6 +23,10 @@ class Question < ModelBase
 		questions.empty? ? nil : questions.map { |datum| Question.new(datum) }
 	end
 
+	def self.most_liked(n)
+		QuestionLike.most_liked_questions(n)[n-1]
+	end
+	
 	attr_accessor :id, :title, :body, :author_id
 
 	def initialize(options)
