@@ -48,7 +48,7 @@ describe User do
 		it "takes in a hash as argument" do
 			expect { hash_results }.to_not raise_error
 		end
-		
+
 		it "returns an array of users" do
 			expect(hash_results).to be_an(Array)
 			expect(hash_results).to all(be_an(User))
@@ -78,6 +78,47 @@ describe User do
 	end
 
 	subject(:user) { User.find_by_id(1) }
+	let(:new_user) { User.new('fname'=>'New','lname'=>'Guy') }
+
+	describe "#save" do
+		it "calls #create when saving a new user" do
+			expect(new_user).to receive(:create)
+			new_user.save
+		end
+
+		it "calls #update when saving an existing user" do
+			expect(user).to receive(:update)
+			user.save
+		end
+	end
+
+	describe "#create" do
+		it "adds a new user to the users table" do
+			new_user.create
+
+			newest_user = User.find_by_id(5)
+			expect(newest_user.fname).to eq('New')
+			expect(newest_user.lname).to eq('Guy')
+		end
+
+		it "raises error when called on an existing user" do
+			expect { user.create }.to raise_error("#{user} already in database")
+		end
+	end
+
+	describe "#update" do
+		it "updates an existing user in the users table" do
+			user.fname = "Updated"
+			user.update
+
+			updated_user = User.find_by_id(1)
+			expect(updated_user.fname).to eq('Updated')
+		end
+
+		it "raises error when called on a new user" do
+			expect { new_user.update }.to raise_error("#{new_user} not in database")
+		end
+	end
 
 	describe "#authored_questions" do
 		let(:question) { class_double("Question").as_stubbed_const }
