@@ -6,8 +6,8 @@ describe User do
 	after(:each)  { QuestionsDB.reset! }
 
 	describe "#initialize" do
-		let(:user) 	  { User.new(options) }
-		let(:options) { { 'fname'=>'John', 'lname'=>'Smith' } }
+		subject(:user) { User.new(options) }
+		let(:options)  { { 'fname'=>'John', 'lname'=>'Smith' } }
 
 		it "assigns fname and lname accordingly" do
 			expect(user.fname).to eq('John')
@@ -38,6 +38,16 @@ describe User do
 		it "returns the correct first and last name" do
 			expect(result.fname).to eq('First')
 			expect(result.lname).to eq('User')
+		end
+	end
+
+	describe "#authored_questions" do
+		subject(:user) { User.find_by_id(1) }
+		let(:question) { class_double("Question").as_stubbed_const }
+	
+		it "calls Question::find_by_author_id" do
+			expect(question).to receive(:find_by_author_id).with(user.id)
+			user.authored_questions
 		end
 	end
 end
