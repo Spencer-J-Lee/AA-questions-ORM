@@ -92,4 +92,47 @@ describe Question do
 			expect(correct_body).to be(true)
 		end
 	end
+
+	subject(:question) { Question.find_by_id(1) }
+	let(:new_question) { Question.new('title'=>'new_title', 'body'=>'new_body', 'author_id'=>1) }
+
+	describe "#save" do
+		it "calls #create when saving a new question" do
+			expect(new_question).to receive(:create)
+			new_question.save
+		end
+
+		it "calls #update when saving an existing question" do
+			expect(question).to receive(:update)
+			question.save
+		end
+	end
+
+	describe "#create" do
+		it "adds a new question to the questions table" do
+			new_question.create
+
+			newest_question = Question.find_by_id(7)
+			expect(newest_question.title).to eq('new_title')
+			expect(newest_question.body).to eq('new_body')
+		end
+
+		it "raises error when called on an existing question" do
+			expect { question.create }.to raise_error("#{question} already in database")
+		end
+	end
+
+	describe "#update" do
+		it "updates an existing question in the questions table" do
+			question.title = "Updated"
+			question.update
+
+			updated_question = Question.find_by_id(1)
+			expect(updated_question.title).to eq('Updated')
+		end
+
+		it "raises error when called on a new question" do
+			expect { new_question.update }.to raise_error("#{new_question} not in database")
+		end
+	end
 end
