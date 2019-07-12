@@ -41,6 +41,42 @@ describe User do
 		end
 	end
 
+	describe "::where" do
+		subject(:hash_results) { User.where(hash_options) }
+		let(:hash_options)     { { lname: 'User' } }
+
+		it "takes in a hash as argument" do
+			expect { hash_results }.to_not raise_error
+		end
+		
+		it "returns an array of users" do
+			expect(hash_results).to be_an(Array)
+			expect(hash_results).to all(be_an(User))
+		end
+
+		it "returns users who match the search criteria" do
+			correct_lname = hash_results.all? { |user| user.lname = "User" }
+			expect(correct_lname).to be(true)
+		end
+
+		subject(:str_results) { User.where(str_options) }
+		let(:str_options)     { "lname = 'User'" }
+
+		it "takes in a string as argument" do
+			expect { str_results }.to_not raise_error
+		end
+	
+		it "returns an array of users" do
+			expect(str_results).to be_an(Array)
+			expect(str_results).to all(be_an(User))
+		end
+
+		it "returns users who match the search criteria" do
+			correct_lname = str_results.all? { |user| user.lname = "User" }
+			expect(correct_lname).to be(true)
+		end
+	end
+
 	subject(:user) { User.find_by_id(1) }
 
 	describe "#authored_questions" do
