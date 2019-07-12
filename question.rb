@@ -6,9 +6,7 @@ require_relative 'reply'
 require_relative 'user'
 
 class Question < ModelBase
-	def self.all
-		super
-	end
+
 
 	def self.find_by_id(id)
 		super(id)

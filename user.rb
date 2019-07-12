@@ -6,10 +6,6 @@ require_relative 'question'
 require_relative 'reply'
 
 class User < ModelBase
-	def self.all
-		super
-	end
-	
 	def self.find_by_name(fname, lname)
 		user = QuestionsDB.execute(<<-SQL, fname, lname)
 			SELECT
