@@ -6,8 +6,6 @@ require_relative 'reply'
 require_relative 'user'
 
 class Question < ModelBase
-
-
 	def self.find_by_id(id)
 		super(id)
 	end
