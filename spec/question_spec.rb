@@ -38,4 +38,58 @@ describe Question do
 			expect(result.id).to be(1)
 		end
 	end
+
+	describe "::find_by_author_id" do
+		let(:results) { Question.find_by_author_id(3) }
+
+		it "returns instances of the question class" do
+			expect(results).to all(be_an(Question))
+		end
+
+		it "returns the correct title, body, and author_id" do
+			expect(results.map(&:author_id)).to all(be(3))
+			expect(results[0].title).to eq('1st Question from Third User')
+			expect(results[1].title).to eq('2nd Question from Third User')
+			expect(results[2].title).to eq('3rd Question from Third User')
+			expect(results[0].body).to eq('Fourth body')
+			expect(results[1].body).to eq('Fifth body')
+			expect(results[2].body).to eq('Sixth body')
+		end
+	end
+
+	describe "::where" do
+		subject(:hash_results) { Question.where(hash_options) }
+		let(:hash_options)     { { body: 'First body' } }
+
+		it "takes in a hash as argument" do
+			expect { hash_results }.to_not raise_error
+		end
+
+		it "returns an array of questions" do
+			expect(hash_results).to be_an(Array)
+			expect(hash_results).to all(be_an(Question))
+		end
+
+		it "returns questions who match the search criteria" do
+			correct_body = hash_results.all? { |question| question.body = 'First body' }
+			expect(correct_body).to be(true)
+		end
+
+		subject(:str_results) { Question.where(str_options) }
+		let(:str_options)     { "body = 'First body'" }
+
+		it "takes in a string as argument" do
+			expect { str_results }.to_not raise_error
+		end
+	
+		it "returns an array of questions" do
+			expect(str_results).to be_an(Array)
+			expect(str_results).to all(be_an(Question))
+		end
+
+		it "returns questions who match the search criteria" do
+			correct_body = str_results.all? { |question| question.body = 'First body' }
+			expect(correct_body).to be(true)
+		end
+	end
 end
