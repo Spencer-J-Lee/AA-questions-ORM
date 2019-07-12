@@ -41,13 +41,32 @@ describe User do
 		end
 	end
 
+	subject(:user) { User.find_by_id(1) }
+
 	describe "#authored_questions" do
-		subject(:user) { User.find_by_id(1) }
 		let(:question) { class_double("Question").as_stubbed_const }
 	
 		it "calls Question::find_by_author_id" do
 			expect(question).to receive(:find_by_author_id).with(user.id)
 			user.authored_questions
+		end
+	end
+
+	describe "#authored_replies" do
+		let(:reply) { class_double("Reply").as_stubbed_const }
+
+		it "calls Reply::find_by_user_id" do
+			expect(reply).to receive(:find_by_user_id).with(user.id)
+			user.authored_replies
+		end
+	end
+
+	describe "#followed_questions" do
+		let(:question_follow) { class_double("QuestionFollow").as_stubbed_const }
+
+		it "calls QuestionFollow::followed_questions_for_user_id" do
+			expect(question_follow).to receive(:followed_questions_for_user_id).with(user.id)
+			user.followed_questions
 		end
 	end
 end
