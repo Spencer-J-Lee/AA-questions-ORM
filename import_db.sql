@@ -17,10 +17,10 @@ CREATE TABLE users (
 INSERT INTO
 	users (fname, lname)
 VALUES
-	('Dio', 'Brando'),
-	('Joseph', 'Joestar'),
-	('Kekyoin', 'Noriaki'),
-	('Lurker','Larry');
+	('First' , 'User'),
+	('Second', 'User'),
+	('Third' , 'User'),
+	('Lurker', 'User');
 
 -- QUESTIONS --
 
@@ -36,12 +36,12 @@ CREATE TABLE questions (
 INSERT INTO
 	questions (title, body, author_id)
 VALUES
-	('Question from DIO?', 'FIRST BODY', (SELECT id FROM users WHERE fname = 'Dio' AND lname = 'Brando')),
-	('Question from JOJO?', 'SECOND BODY', (SELECT id FROM users WHERE fname = 'Joseph' AND lname = 'Joestar')),
-	('Question from KEKYOIN?', 'THIRD BODY', (SELECT id FROM users WHERE fname = 'Kekyoin' AND lname = 'Noriaki')),
-	('Another question from KEKYOIN?', 'FOURTH BODY', 3),
-	('2nd question from DIO?', 'FIFTH BODY', 1),
-	('3rd question from DIO?', 'SIXTH BODY', 1);
+	('1st Question from First User' , 'First body' , 1), -- User 1 has 1 question
+	('1st Question from Second User', 'Second body', 2), -- User 2 has 2 questions
+	('2nd Question from Second User', 'Third body' , 2),
+	('1st Question from Third User' , 'Fourth body', 3), -- User 3 has 3 questions
+	('2nd Question from Third User' , 'Fifth body' , 3),
+	('3rd Question from Third User' , 'Sixth body' , 3);
 
 -- QUESTION FOLLOWS --
 
@@ -57,10 +57,16 @@ CREATE TABLE question_follows (
 INSERT INTO
 	question_follows (follower_id, question_id)
 VALUES
-	(1, 2), -- Dio Brando following Joseph Joestar's question
-	(3, 1), -- Kekyoin Noriaki following Dio Brando's question
-	(2, 1), -- Joseph Joestar following Dio Brando's question
-	(1, 1); -- Dio Brando following Dio Brando's question
+	(3, 1), -- Question 1 has 1 follow
+	(3, 2), -- Question 2 has 2 follows
+	(2, 2),
+	(3, 3), -- Question 3 has 3 follows
+	(2, 3),
+	(1, 3);
+
+-- User 1 has 1 follow
+-- User 2 has 3 follows
+-- User 3 has 3 follows
 
 -- REPLIES --
 
@@ -79,12 +85,16 @@ CREATE TABLE replies (
 INSERT INTO
 	replies (user_id, question_id, parent_reply_id, body)
 VALUES
-	(2, 1, NULL, "1st: reply by JOJO"),
-	(1, 1, 1, "2nd: reply by DIO"),
-	(3, 1, 2, "3rd: reply by KEKYOIN"),
-	(3, 1, 3, "4th: another reply by KEKYOIN"),
-	(1, 2, NULL, "1st: reply on second thread by DIO"),
-	(2, 2, 1, "2nd: reply on second thread by JOJO");
+	(3, 1, NULL, 'Third User  | Subject Question: 1 | Parent ID: NULL'), -- Question 1 has 1 replies
+	(3, 2, NULL, 'Third User  | Subject Question: 2 | Parent ID: NULL'), -- Question 2 has 2 replies
+	(2, 2, 1   , 'Second User | Subject Question: 2 | Parent ID: 1'   ), 
+	(3, 3, NULL, 'Third User  | Subject Question: 3 | Parent ID: NULL'), -- Question 3 has 3 replies
+	(2, 3, 1   , 'Second User | Subject Question: 3 | Parent ID: 1'   ), 
+	(1, 3, 2   , 'First User  | Subject Question: 3 | Parent ID: 2'   ); 
+
+-- User 1 has 1 reply
+-- User 2 has 2 replies
+-- User 3 has 3 replies
 
 -- QUESTION LIKES --
 
@@ -100,9 +110,17 @@ CREATE TABLE question_likes (
 INSERT INTO
 	question_likes (liker_id, question_id)
 VALUES
-	(1, 1), 
-	(2, 1),
-	(3, 1),
-	(1, 2),
-	(2, 2),
-	(1, 5);
+	(3, 1), -- Question 1 has 1 like
+	(3, 2), -- Question 2 has 2 likes
+	(2, 2), 
+	(3, 3), -- Question 3 has 3 likes
+	(2, 3),
+	(1, 3);
+
+-- User 1 has liked 1 question
+-- User 2 has liked 2 questions
+-- User 3 has liked 3 questions
+
+-- User 1's average karma is 1/1 = 1
+-- User 2's average karma is 5/2 = 2.5
+-- User 3's average karma is 0/3 = 0
